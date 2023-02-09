@@ -20,7 +20,7 @@ struct IoCompletionStatus : public OVERLAPPED {
 // 用于执行异步完成回调。
 class IoCompletionDelegate {
 public:
-  virtual void OnIoCompleted(IoCompletionStatus* status) = 0;
+  virtual void IoCompleted(IoCompletionStatus* status) = 0;
 };
 
 // IO 完成端口

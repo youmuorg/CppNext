@@ -1,0 +1,85 @@
+{
+    "version": 6,
+    "cmakeMinimumRequired": {
+        "major": 3,
+        "minor": 25,
+        "patch": 0
+    },
+    "configurePresets": [
+        {
+            "name": "clang-x64-ninja-debug",
+            "inherits": "windows-base",
+            "displayName": "Windows Clang x64 (Ninja) Debug",
+            "description": "Using Clang x64 compiler with \"Ninja\" geneartor on Windows - Debug",
+            "generator": "Ninja",
+            "environment": {
+                "PATH": "C:\\Program Files\\LLVM\\bin;$penv{PATH}"
+            },
+            "architecture": {
+                "value": "x64",
+                "strategy": "external"
+            },
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_C_COMPILER": "clang",
+                "CMAKE_CXX_COMPILER": "clang"
+            }
+        },
+        {
+            "name": "windows-default",
+            "inherits": "clang-x64-ninja-debug",
+            "binaryDir": "${sourceDir}/build",
+            "installDir": "${sourceDir}/install",
+            "environment": {
+                "PATH": "C:\\Program Files\\LLVM\\bin;$penv{PATH}"
+            }
+        },
+        {
+            "name": "clang-cl-x64-ninja-debug",
+            "inherits": "windows-base",
+            "displayName": "Windows ClangCL x64 (Ninja) Debug",
+            "description": "Using ClangCL x64 compiler with \"Ninja\" geneartor on Windows - Debug",
+            "generator": "Ninja",
+            "environment": {
+                "PATH": "C:\\Program Files\\LLVM\\bin;$penv{PATH}"
+            },
+            "architecture": {
+                "value": "x64",
+                "strategy": "external"
+            },
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_C_COMPILER": "clang-cl",
+                "CMAKE_CXX_COMPILER": "clang-cl"
+            },
+            "vendor": {
+                "microsoft.com/VisualStudioSettings/CMake/1.0": {
+                    "intelliSenseMode": "windows-clang-x64"
+                }
+            }
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "windows-default",
+            "configurePreset": "windows-default"
+        },
+        {
+            "name": "vs2022",
+            "configurePreset": "windows-vs2022-clang-cl-x64-debug"
+        }
+    ],
+    "testPresets": [
+        {
+            "name": "vs2022",
+            "configurePreset": "windows-vs2022-clang-cl-x64-debug",
+            "output": {
+                "outputOnFailure": true
+            },
+            "execution": {
+                "noTestsAction": "error",
+                "stopOnFailure": true
+            }
+        }
+    ]
+}

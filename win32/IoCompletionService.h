@@ -7,7 +7,7 @@ namespace next {
 namespace win32 {
 
 // IO 完成服务
-// 提供异步 IO Proactive 模型简单封装
+// 提供 Proactive 模型异步 IO 功能的线程服务。
 class IoCompletionService {
 public:
   // 开始完成状态等待循环

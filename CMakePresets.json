@@ -1,176 +1,158 @@
 {
-    "version": 4,
+    "version": 6,
     "cmakeMinimumRequired": {
         "major": 3,
-        "minor": 22,
+        "minor": 25,
         "patch": 0
     },
     "configurePresets": [
         {
+            "name": "base",
+            "hidden": true,
+            "binaryDir": "${sourceDir}/out/build/${presetName}",
+            "installDir": "${sourceDir}/out/install/${presetName}",
+            "cacheVariables": {
+                "CMAKE_INSTALL_PREFIX": "${sourceDir}/out/install/${presetName}",
+                "CMAKE_TOOLCHAIN_FILE": {
+                    "value": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake",
+                    "type": "FILEPATH"
+                },
+                "CMAKE_EXPORT_COMPILE_COMMANDS": "on"
+            }
+        },
+        {
+            "name": "windows-base",
+            "inherits": "base",
+            "hidden": true,
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Windows"
+            },
+            "vendor": {
+                "microsoft.com/VisualStudioSettings/CMake/1.0": {
+                    "hostOS": [
+                        "Windows"
+                    ]
+                }
+            }
+        },
+        {
             "name": "linux-base",
+            "inherits": "base",
             "hidden": true,
             "condition": {
                 "type": "equals",
                 "lhs": "${hostSystemName}",
                 "rhs": "Linux"
             },
-            "binaryDir": "${sourceDir}/out/build/${presetName}",
-            "cacheVariables": {
-                "CMAKE_INSTALL_PREFIX": "$env{HOME}/.cmake/install/${presetName}"
+            "vendor": {
+                "microsoft.com/VisualStudioSettings/CMake/1.0": {
+                    "hostOS": [
+                        "Linux"
+                    ]
+                },
+                "microsoft.com/VisualStudioRemoteSettings/CMake/1.0": {
+                    "sourceDir": "$env{HOME}/.vs/$ms{projectDirName}"
+                }
             }
         },
         {
-            "name": "clang-x86_64-linux-debug",
-            "inherits": "linux-base",
-            "displayName": "Clang 16.0.0 x86_64-pc-linux-gnu",
-            "description": "Using compilers: C = /usr/bin/clang, CXX = /usr/bin/clang++",
-            "cacheVariables": {
-                "CMAKE_C_COMPILER": "clang",
-                "CMAKE_CXX_COMPILER": "clang++",
-                "CMAKE_BUILD_TYPE": "Debug"
-            }
-        },
-        {
-            "name": "gcc-x86_64-linux-debug",
-            "inherits": "linux-base",
-            "displayName": "GCC 11.2.0 x86_64-linux-gnu",
-            "description": "Using compilers: C = /usr/bin/gcc, CXX = /usr/bin/g++",
-            "cacheVariables": {
-                "CMAKE_C_COMPILER": "gcc",
-                "CMAKE_CXX_COMPILER": "g++",
-                "CMAKE_BUILD_TYPE": "Debug"
-            }
-        },
-        {
-            "name": "base",
-            "description": "For more information: http://aka.ms/cmakepresetsvs",
-            "hidden": true,
+            "name": "windows-ninja-cl-x64-debug",
+            "inherits": "windows-base",
+            "displayName": "Ninja cl x64 Debug",
+            "description": "Sets Ninja generator, compilers, x64 architecture, build and install directory, debug build type",
             "generator": "Ninja",
-            "binaryDir": "${sourceDir}/out/build/${presetName}",
-            "installDir": "${sourceDir}/out/install/${presetName}",
-            "toolchainFile": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake",
-            "environment": {
-                "VCPKG_FEATURE_FLAGS": "manifests,versions,binarycaching,registries"
-            },
-            "condition": {
-                "type": "equals",
-                "lhs": "${hostSystemName}",
-                "rhs": "Windows"
-            }
-        },
-        {
-            "name": "x64-debug",
-            "displayName": "x64 Debug",
-            "description": "Sets debug build type and x64 arch",
-            "inherits": "base",
             "architecture": {
                 "value": "x64",
                 "strategy": "external"
             },
             "cacheVariables": {
-                "CMAKE_BUILD_TYPE": "Debug"
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_C_COMPILER": "cl",
+                "CMAKE_CXX_COMPILER": "cl"
             }
         },
         {
-            "name": "x64-release",
-            "displayName": "x64 Release",
-            "description": "Sets release build type",
-            "inherits": "x64-debug",
-            "cacheVariables": {
-                "CMAKE_BUILD_TYPE": "Release"
-            }
-        },
-        {
-            "name": "x86-debug",
-            "displayName": "x86 Debug ",
-            "description": "Sets debug build type and x86 arch",
-            "inherits": "base",
+            "name": "windows-ninja-clang-x64-debug",
+            "inherits": "windows-base",
+            "displayName": "Ninja clang x64 Debug",
+            "description": "Sets Ninja generator, compilers, x64 architecture, build and install directory, debug build type",
+            "generator": "Ninja",
             "architecture": {
-                "value": "x86",
+                "value": "x64",
                 "strategy": "external"
             },
             "cacheVariables": {
-                "CMAKE_BUILD_TYPE": "Debug"
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_C_COMPILER": "clang",
+                "CMAKE_CXX_COMPILER": "clang"
             }
         },
         {
-            "name": "x86-release",
-            "displayName": "x86 Release",
-            "description": "Sets release build type",
-            "inherits": "x86-debug",
-            "cacheVariables": {
-                "CMAKE_BUILD_TYPE": "Release"
-            }
-        },
-        {
-            "name": "linux-gcc-debug",
-            "displayName": "Linux Debug",
-            "description": "Sets GCC",
-            "inherits": "base",
-            "cacheVariables": {
-                "CMAKE_C_COMPILER": "gcc",
-                "CMAKE_CXX_COMPILER": "g++",
-                "CMAKE_BUILD_TYPE": "Debug"
+            "name": "windows-ninja-clang-cl-x64-debug",
+            "inherits": "windows-base",
+            "displayName": "Ninja clang-cl x64 Debug",
+            "description": "Sets Ninja generator, compilers, x64 architecture, build and install directory, debug build type",
+            "generator": "Ninja",
+            "architecture": {
+                "value": "x64",
+                "strategy": "external"
             },
-            "condition": {
-                "type": "equals",
-                "lhs": "${hostSystemName}",
-                "rhs": "Linux"
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_C_COMPILER": "clang-cl",
+                "CMAKE_CXX_COMPILER": "clang-cl"
+            },
+            "vendor": {
+                "microsoft.com/VisualStudioSettings/CMake/1.0": {
+                    "intelliSenseMode": "windows-clang-x64"
+                }
             }
         },
         {
-            "name": "linux-gcc-release",
-            "displayName": "Linux Release",
-            "description": "Sets release build type",
-            "inherits": "linux-debug",
+            "name": "windows-vs2019-cl-x64-debug",
+            "inherits": "windows-ninja-cl-x64-debug",
+            "displayName": "VS2019 cl x64 Debug",
+            "generator": "Visual Studio 16 2019"
+        },
+        {
+            "name": "windows-vs2022-clang-cl-x64-debug",
+            "inherits": "windows-ninja-clang-cl-x64-debug",
+            "displayName": "VS2022 clang-cl x64 Debug",
+            "toolset": "ClangCL",
+            "generator": "Visual Studio 17 2022"
+        },
+        {
+            "name": "linux-gcc",
+            "inherits": "linux-base",
+            "displayName": "Linux Debug",
+            "description": "Sets Ninja generator, compilers, build and install directory, debug build type",
+            "generator": "Ninja",
             "cacheVariables": {
-                "CMAKE_BUILD_TYPE": "Release"
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_C_COMPILER": "gcc-8",
+                "CMAKE_CXX_COMPILER": "g++-8"
             }
         }
     ],
     "buildPresets": [
         {
-            "name": "default-build-linux",
-            "displayName": "Default",
-            "configurePreset": "linux-gcc-debug",
-            "description": "Vanilla build"
-        },
-        {
-            "name": "default-build-windows",
-            "displayName": "Default",
-            "configurePreset": "x64-debug",
-            "description": "Vanilla build"
-        },
-        {
-            "name": "verbose-build-linux",
-            "displayName": "Verbose Build",
-            "description": "Passes -v to Ninja",
-            "configurePreset": "linux-gcc-debug",
-            "nativeToolOptions": [
-                "-v"
-            ]
-        },
-        {
-            "name": "verbose-build-windows",
-            "displayName": "Verbose Build",
-            "configurePreset": "x64-debug",
-            "inherits": "verbose-build-linux"
+            "name": "default",
+            "configurePreset": "default"
         }
     ],
     "testPresets": [
         {
-            "name": "core-test-linux",
-            "description": "Enable output on failure",
-            "displayName": "Linux default test",
-            "configurePreset": "linux-gcc-debug",
+            "name": "default",
+            "configurePreset": "default",
             "output": {
                 "outputOnFailure": true
+            },
+            "execution": {
+                "noTestsAction": "error",
+                "stopOnFailure": true
             }
-        },
-        {
-            "name": "core-test-windows",
-            "inherits": "core-test-linux",
-            "configurePreset": "windows-debug-default"
         }
     ]
 }
