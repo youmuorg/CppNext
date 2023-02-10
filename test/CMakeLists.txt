@@ -1,11 +1,11 @@
 find_package(GTest CONFIG REQUIRED)
 
-enable_testing()
-
-add_executable("file_io_unittest" 
-  "win32/file_io_unittest.cc"
+file(GLOB NEXT_WIN32_UNITTEST_SOURCES "./win32/*.cpp")
+add_executable(win32_unittest 
+  ${NEXT_WIN32_UNITTEST_SOURCES}
 )
-target_link_libraries("file_io_unittest" PRIVATE GTest::gtest GTest::gtest_main)
+target_link_libraries(win32_unittest PRIVATE GTest::gtest GTest::gtest_main)
+target_link_libraries(win32_unittest PRIVATE next_win32)
 
 include(GoogleTest)
-gtest_discover_tests("file_io_unittest")
+gtest_discover_tests(win32_unittest)

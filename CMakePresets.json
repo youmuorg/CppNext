@@ -124,6 +124,24 @@
             "generator": "Visual Studio 17 2022"
         },
         {
+            "name": "windows-vs2022-cl-x64-debug",
+            "inherits": "windows-base",
+            "displayName": "VS2022 cl x64 Debug",
+            "generator": "Visual Studio 17 2022",
+            "architecture": {
+                "value": "x64",
+                "strategy": "external"
+            },
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug"
+            },
+            "vendor": {
+                "microsoft.com/VisualStudioSettings/CMake/1.0": {
+                    "intelliSenseMode": "windows-clang-x64"
+                }
+            }
+        },
+        {
             "name": "linux-gcc",
             "inherits": "linux-base",
             "displayName": "Linux Debug",
@@ -140,12 +158,27 @@
         {
             "name": "default",
             "configurePreset": "default"
+        },
+        {
+            "name": "vs2022",
+            "configurePreset": "windows-vs2022-cl-x64-debug"
         }
     ],
     "testPresets": [
         {
             "name": "default",
             "configurePreset": "default",
+            "output": {
+                "outputOnFailure": true
+            },
+            "execution": {
+                "noTestsAction": "error",
+                "stopOnFailure": true
+            }
+        },
+        {
+            "name": "vs2022",
+            "configurePreset": "windows-vs2022-cl-x64-debug",
             "output": {
                 "outputOnFailure": true
             },

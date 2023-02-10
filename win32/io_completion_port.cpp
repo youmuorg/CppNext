@@ -1,5 +1,5 @@
-#include "win32/IoCompletionPort.h"
-#include "win32/CheckUtils.h"
+#include "win32/io_completion_port.h"
+#include "win32/check_utils.h"
 
 #include <windows.h>
 #include <assert.h>

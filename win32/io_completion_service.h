@@ -1,7 +1,7 @@
 #ifndef WIN32_IO_COMPLETION_SERVICE_H_
 #define WIN32_IO_COMPLETION_SERVICE_H_
 
-#include "win32/IoCompletionPort.h"
+#include "win32/io_completion_port.h"
 
 namespace next {
 namespace win32 {
@@ -12,7 +12,7 @@ class IoCompletionService {
 public:
   // 开始完成状态等待循环
   void RunLoop();
-
+  void Quit();
 
 private:
   IoCompletionPort port_;

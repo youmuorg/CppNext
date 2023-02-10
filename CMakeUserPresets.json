@@ -63,23 +63,8 @@
         {
             "name": "windows-default",
             "configurePreset": "windows-default"
-        },
-        {
-            "name": "vs2022",
-            "configurePreset": "windows-vs2022-clang-cl-x64-debug"
         }
     ],
     "testPresets": [
-        {
-            "name": "vs2022",
-            "configurePreset": "windows-vs2022-clang-cl-x64-debug",
-            "output": {
-                "outputOnFailure": true
-            },
-            "execution": {
-                "noTestsAction": "error",
-                "stopOnFailure": true
-            }
-        }
     ]
 }

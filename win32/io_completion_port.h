@@ -1,8 +1,8 @@
 #ifndef WIN32_IO_COMPLETION_PORT_H_
 #define WIN32_IO_COMPLETION_PORT_H_
 
-#include "win32/KernelObject.h"
-#include "win32/FileObject.h"
+#include "win32/kernel_object.h"
+#include "win32/file_object.h"
 
 #include <cstdint>
 
@@ -13,7 +13,6 @@ namespace win32 {
 // 包含异步 IO 数据，也就是重叠 IO 信息。
 struct IoCompletionStatus : public OVERLAPPED {
   LPDWORD bytes;          // 异步传输的字节数
-  IoCompletionDelegate* delegate;
 };
 
 // IO 完成委托

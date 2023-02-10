@@ -1,4 +1,4 @@
-#include "win32/IoCompletionService.h"
+#include "win32/io_completion_service.h"
 
 namespace next {
 namespace win32 {
@@ -9,9 +9,13 @@ void IoCompletionService::RunLoop() {
   
   while (port_.WaitStatus(delegate, status)) {
     if (delegate != nullptr && status != nullptr) {
-      delegate->OnIoCompleted(status);
+      delegate->IoCompleted(status);
     }
   }
+}
+
+void IoCompletionService::Quit() {
+  port_.Close();
 }
 
 }

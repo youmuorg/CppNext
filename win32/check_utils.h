@@ -19,6 +19,9 @@ inline bool _ApiCheck(
     bool expr, 
     const char* apiName, 
     const std::source_location location = std::source_location::current()) {
+  if (!expr) {
+    
+  }
   return expr;
 }
 

@@ -1,7 +1,7 @@
 #ifndef WIN32_FILE_OBJECT_H_
 #define WIN32_FILE_OBJECT_H_
 
-#include "win32/KernelObject.h"
+#include "win32/kernel_object.h"
 
 namespace next {
 namespace win32 {
