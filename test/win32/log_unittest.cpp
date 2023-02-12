@@ -4,8 +4,16 @@
 
 using namespace next;
 
-TEST(LogUtilsTest, Log) {
-  win32::_Log(win32::LogLevel::info, L"Test Log", L"a1");
+class LogUtilsTest : public testing::Test {
+protected:
+  // virtual void SetUp() override {
+  //   log::default_logger.AddSink()
+  // }
 
+};
+
+TEST_F(LogUtilsTest, Log) {
+  log::Info() << std::format("Test {}", "a");
+  win32::_LogInfo() << L"Debug test";
   EXPECT_EQ(1, 1);
 }
