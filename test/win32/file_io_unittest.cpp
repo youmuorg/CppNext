@@ -1,4 +1,4 @@
-#include "win32/io_completion_service.h"
+#include "win32/file_io_service.h"
 
 #include <gtest/gtest.h>
 
@@ -9,16 +9,18 @@ using namespace next;
 class FileIoTest: public testing::Test {
 protected:
   FileIoTest() :
-    thread_(&win32::IoCompletionService::RunLoop, &service_) {}
+    _thread(&win32::IoService::Run, &_ioService),
+    _fileIoService(_ioService) {}
   virtual ~FileIoTest() {}
   virtual void SetUp() override {}
   virtual void TearDown() override {
-    service_.Quit();
+    _ioService.Quit();
   }
 
-private:
-  win32::IoCompletionService service_;
-  std::jthread thread_;
+protected:
+  win32::IoService _ioService;
+  win32::FileIoService _fileIoService;
+  std::jthread _thread;
 };
 
 TEST_F(FileIoTest, Test) {
@@ -26,5 +28,7 @@ TEST_F(FileIoTest, Test) {
 }
 
 TEST_F(FileIoTest, Write) {
-
+  auto file = File(_fileIoService);
+  auto future = file.Write("Hello");
+  future.wait();
 }

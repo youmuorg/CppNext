@@ -12,6 +12,7 @@ class KernelObject {
 public:
   explicit KernelObject() : handle_(NULL) {}
   explicit KernelObject(HANDLE handle) : handle_(handle) {}
+  explicit KernelObject(const KernelObject& other) = delete;
   ~KernelObject() { Close(); }
 
 public:
